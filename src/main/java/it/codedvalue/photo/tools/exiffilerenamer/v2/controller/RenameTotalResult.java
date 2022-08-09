@@ -1,6 +1,8 @@
-package it.codedvalue.photo.tools.exiffilerenamer.model;
+package it.codedvalue.photo.tools.exiffilerenamer.v2.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.service.RenameSingleResultImage;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.service.RenameSingleResultSpecific;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;

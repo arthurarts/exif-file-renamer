@@ -1,9 +1,8 @@
-package it.codedvalue.photo.tools.exiffilerenamer.controller;
+package it.codedvalue.photo.tools.exiffilerenamer.v2.controller;
 
-import it.codedvalue.photo.tools.exiffilerenamer.model.RenameSingleResultImage;
-import it.codedvalue.photo.tools.exiffilerenamer.model.RenameSingleResultSpecific;
-import it.codedvalue.photo.tools.exiffilerenamer.model.RenameTotalResult;
-import it.codedvalue.photo.tools.exiffilerenamer.service.FileRenamer;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.service.FileRenameService;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.service.RenameSingleResultImage;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.service.RenameSingleResultSpecific;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,8 +32,12 @@ public class ExifController {
 
     @Value("${safe.base.path}")
     private String safeImageDirectory;
-    private final FileRenamer fileRenamer;
+    private final FileRenameService fileRenameService;
 
+    @GetMapping("test-single-file")
+    public RenameSingleResultImage renameSingleFile(@RequestParam String fileName) {
+        return fileRenameService.renameImage(Paths.get(fileName).normalize());
+    }
 
     @GetMapping("rename-all-in-directory")
     public RenameTotalResult renameAllFilesInDirectory(@RequestParam String directory) {
@@ -49,24 +52,30 @@ public class ExifController {
             List<RenameSingleResultImage> renameSingleResultImages = new ArrayList<>();
             List<RenameSingleResultSpecific> renameSingleResultSpecifics = new ArrayList<>();
             try (Stream<Path> paths = Files.walk(Paths.get(readDirectory))) {
-                paths.filter(Files::isRegularFile).filter(path -> !Files.isDirectory(path)).filter(path -> {
-                    try {
-                        return !Files.isHidden(path);
-                    } catch (IOException e) {
-                        log.error(e.getMessage(), e);
-                        throw new RuntimeException(e);
-                    }
-                }).forEach(path -> {
+                paths
+                        .filter(path -> path.getFileName().toString().toLowerCase().endsWith("mov")
+                                || path.getFileName().toString().toLowerCase().endsWith("mp4")
+                                || path.getFileName().toString().toLowerCase().endsWith("3gp"))
+                        .filter(Files::isRegularFile)
+                        .filter(path -> !Files.isDirectory(path))
+                        .filter(path -> {
+                            try {
+                                return !Files.isHidden(path);
+                            } catch (IOException e) {
+                                log.error(e.getMessage(), e);
+                                throw new RuntimeException(e);
+                            }
+                        }).forEach(path -> {
 
-                    RenameSingleResultImage renameSingleResultImage = fileRenamer.renameImage(path);
-                    RenameSingleResultSpecific renameSingleResultSpecific = fileRenamer.renameSpecific(path);
-                    if (Objects.nonNull(renameSingleResultSpecific.getLogSpecificFail()) || Objects.nonNull(renameSingleResultSpecific.getLogSpecificSuccess())) {
-                        renameSingleResultSpecifics.add(renameSingleResultSpecific);
-                    }
-                    if (Objects.nonNull(renameSingleResultImage.getRenameLogImagesFail()) || Objects.nonNull(renameSingleResultImage.getRenameLogImagesSuccess())) {
-                        renameSingleResultImages.add(renameSingleResultImage);
-                    }
-                });
+                            RenameSingleResultImage renameSingleResultImage = fileRenameService.renameImage(path);
+                            RenameSingleResultSpecific renameSingleResultSpecific = fileRenameService.renameSpecific(path);
+                            if (Objects.nonNull(renameSingleResultSpecific.getLogSpecificFail()) || Objects.nonNull(renameSingleResultSpecific.getLogSpecificSuccess())) {
+                                renameSingleResultSpecifics.add(renameSingleResultSpecific);
+                            }
+                            if (Objects.nonNull(renameSingleResultImage.getRenameLogImagesFail()) || Objects.nonNull(renameSingleResultImage.getRenameLogImagesSuccess())) {
+                                renameSingleResultImages.add(renameSingleResultImage);
+                            }
+                        });
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
