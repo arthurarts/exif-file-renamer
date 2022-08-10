@@ -1,4 +1,4 @@
-package it.codedvalue.photo.tools.exiffilerenamer.v2.service;
+package it.codedvalue.photo.tools.exiffilerenamer.v2.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Map;
