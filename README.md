@@ -7,13 +7,12 @@ Renames images and video files to prefix it with yyyyDDmm_ pattern so the alphab
 Works on most video and image types, including raw files.
 Notable exception: m2ts and mts files.
 
-
-1. start up application
-2. open browser
-
- - 3a to rename single image: 
+1. define safe base dir in application.properties
+2. start up application
+3. open browser
+ - a to rename single image: 
     http://localhost:8080/rename-single?fileName=/Users/Foo/1.JPG
- -  3b to rename all files in directory and underlying directories:
+ - b to rename all files in directory and underlying directories:
     http://localhost:8080/rename-single?fileName=/Users/Foo/
    
 
