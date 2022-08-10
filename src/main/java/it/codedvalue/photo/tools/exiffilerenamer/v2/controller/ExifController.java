@@ -1,5 +1,6 @@
 package it.codedvalue.photo.tools.exiffilerenamer.v2.controller;
 
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.ImageDataRenameResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameTotalResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.service.FileRenameService;
 import java.nio.file.Paths;
@@ -24,10 +25,10 @@ public class ExifController {
     private String safeImageDirectory;
     private final FileRenameService fileRenameService;
 
-//    @GetMapping("test-single-file")
-//    public RenameSingleResultImage renameSingleFile(@RequestParam String fileName) {
-//        return fileRenameService.renameAllImagesInPath(Paths.get(fileName).normalize().toString());
-//    }
+    @GetMapping("rename-single-file")
+    public ImageDataRenameResult renameSingleFile(@RequestParam String fileName) {
+        return fileRenameService.renameSingleResultImage(Paths.get(fileName).normalize());
+    }
 
     @GetMapping("rename-all-in-directory")
     public RenameTotalResult renameAllFilesInDirectory(@RequestParam String directory) {

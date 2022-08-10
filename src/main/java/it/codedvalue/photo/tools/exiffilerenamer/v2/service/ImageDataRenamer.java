@@ -2,7 +2,7 @@ package it.codedvalue.photo.tools.exiffilerenamer.v2.service;
 
 import com.drew.metadata.Metadata;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.CustomExifInfo;
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultImage;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.ImageDataRenameResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.repository.ExifReader;
 import java.io.File;
 import java.nio.file.Files;
@@ -23,8 +23,8 @@ public class ImageDataRenamer {
 
     final ExifReader reader;
 
-    public RenameSingleResultImage rename(Path path) {
-        RenameSingleResultImage renameSingleResult = new RenameSingleResultImage();
+    public ImageDataRenameResult rename(Path path) {
+        ImageDataRenameResult renameSingleResult = new ImageDataRenameResult();
         if (!filenameAlreadyStartsWithYear(path)) {
             log.debug("try to rename file {}", path.getFileName());
             CustomExifInfo customExifInfo = getCustomExifInfo(path.toFile());
@@ -32,14 +32,14 @@ public class ImageDataRenamer {
                 String newFileName = customExifInfo.getCreationDateYYYYMMDD() + "-" + path.getFileName();
                 try {
                     Files.move(path, path.resolveSibling(newFileName));
-                    renameSingleResult.setRenameLogImagesSuccess(String.format("renamed %s to %s", path.getFileName().toString(), newFileName));
+                    renameSingleResult.setRenameSuccessLog(String.format("renamed %s to %s", path.getFileName().toString(), newFileName));
                     renameSingleResult.setOldVSNewImageName(Collections.singletonMap(path.getFileName().toString(), newFileName));
                     log.info("renamed {} to {}", path.getFileName().toString(), newFileName);
                 } catch (Exception e) {
-                    renameSingleResult.setRenameLogImagesFail(String.format("could not rename image \n %s", e));
+                    renameSingleResult.setRenameFailLog(String.format("could not rename image \n %s", e));
                 }
             } else {
-                renameSingleResult.setRenameLogImagesFail(String.format("Could not rename image %s because retrieved exif info was null", path.getFileName()));
+                renameSingleResult.setRenameFailLog(String.format("Could not rename image %s because retrieved exif info was null", path.getFileName()));
             }
         }
         return renameSingleResult;

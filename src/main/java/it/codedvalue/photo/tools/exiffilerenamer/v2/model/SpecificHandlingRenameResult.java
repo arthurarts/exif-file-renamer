@@ -11,10 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RenameSingleResultImage {
-
-    private String renameLogImagesSuccess;
-    private String renameLogImagesFail;
-    private Map<String, String> oldVSNewImageName;
-
+public class SpecificHandlingRenameResult {
+    private String logSpecificSuccess;
+    private String logSpecificFail;
+    private Map<String, String> oldVSNewVidName;
 }

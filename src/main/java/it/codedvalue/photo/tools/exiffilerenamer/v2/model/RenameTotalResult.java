@@ -16,18 +16,18 @@ import lombok.Getter;
 public class RenameTotalResult {
 
 
-    public RenameTotalResult(List<RenameSingleResultImage> renameSingleResultImages, List<RenameSingleResultSpecific> renameSingleResultSpecifics) {
+    public RenameTotalResult(List<ImageDataRenameResult> renameSingleResultImages, List<SpecificHandlingRenameResult> specificHandlingRenameResults) {
         this.totalOldvsNew =
-                renameSingleResultImages.stream().map(RenameSingleResultImage::getOldVSNewImageName).filter(Objects::nonNull).collect(Collectors.toList());
-        this.totalOldvsNew.addAll(renameSingleResultSpecifics.stream().map(RenameSingleResultSpecific::getOldVSNewVidName).filter(Objects::nonNull).collect(Collectors.toList()));
+                renameSingleResultImages.stream().map(ImageDataRenameResult::getOldVSNewImageName).filter(Objects::nonNull).collect(Collectors.toList());
+        this.totalOldvsNew.addAll(specificHandlingRenameResults.stream().map(SpecificHandlingRenameResult::getOldVSNewVidName).filter(Objects::nonNull).collect(Collectors.toList()));
         this.imageRenamingResults = renameSingleResultImages;
-        this.specificRenamingResults = renameSingleResultSpecifics;
+        this.specificRenamingResults = specificHandlingRenameResults;
     }
 
     private Integer totalRenamed;
     private List<Map<String, String>> totalOldvsNew;
-    private List<RenameSingleResultImage> imageRenamingResults;
-    private List<RenameSingleResultSpecific> specificRenamingResults;
+    private List<ImageDataRenameResult> imageRenamingResults;
+    private List<SpecificHandlingRenameResult> specificRenamingResults;
 
     public Integer getTotalRenamed() {
         return totalOldvsNew.size();

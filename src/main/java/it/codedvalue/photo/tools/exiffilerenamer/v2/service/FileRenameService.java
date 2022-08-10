@@ -1,7 +1,7 @@
 package it.codedvalue.photo.tools.exiffilerenamer.v2.service;
 
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultImage;
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultSpecific;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.ImageDataRenameResult;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.SpecificHandlingRenameResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameTotalResult;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,9 +35,8 @@ public class FileRenameService {
     final SpecificRenamer specificRenamer;
 
     public RenameTotalResult renameAllImagesInPath(String readDirectory) {
-        RenameTotalResult renameTotalResult;
-        List<RenameSingleResultImage> renameSingleResultImages = new ArrayList<>();
-        List<RenameSingleResultSpecific> renameSingleResultSpecifics = new ArrayList<>();
+        List<ImageDataRenameResult> renameSingleResultImages = new ArrayList<>();
+        List<SpecificHandlingRenameResult> specificHandlingRenameResults = new ArrayList<>();
 
         try (Stream<Path> paths = Files.walk(Paths.get(readDirectory))) {
             paths.filter(this::isNotIgnorableFile)
@@ -45,27 +44,29 @@ public class FileRenameService {
                     .filter(path -> !Files.isDirectory(path))
                     .filter(this::notHidden)
                     .forEach(path -> {
-                        RenameSingleResultImage renameSingleResultImage;
-                        RenameSingleResultSpecific renameSingleResultSpecific;
+                        ImageDataRenameResult renameSingleResultImage;
+                        SpecificHandlingRenameResult specificHandlingRenameResult;
                         if (!isSpecificFileNameToBeRenamed(path.getFileName().toString())) {
                             renameSingleResultImage = imageDataRenamer.rename(path);
-                            if (Objects.nonNull(renameSingleResultImage.getRenameLogImagesFail()) || Objects.nonNull(renameSingleResultImage.getRenameLogImagesSuccess())) {
+                            if (Objects.nonNull(renameSingleResultImage.getRenameFailLog()) || Objects.nonNull(renameSingleResultImage.getRenameSuccessLog())) {
                                 renameSingleResultImages.add(renameSingleResultImage);
                             }
                         } else {
-                            renameSingleResultSpecific = specificRenamer.renameSpecific(path);
-                            if (Objects.nonNull(renameSingleResultSpecific.getLogSpecificFail()) || Objects.nonNull(renameSingleResultSpecific.getLogSpecificSuccess())) {
-                                renameSingleResultSpecifics.add(renameSingleResultSpecific);
+                            specificHandlingRenameResult = specificRenamer.rename(path);
+                            if (Objects.nonNull(specificHandlingRenameResult.getLogSpecificFail()) || Objects.nonNull(specificHandlingRenameResult.getLogSpecificSuccess())) {
+                                specificHandlingRenameResults.add(specificHandlingRenameResult);
                             }
                         }
                     });
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-
-        return new RenameTotalResult(renameSingleResultImages, renameSingleResultSpecifics);
+        return new RenameTotalResult(renameSingleResultImages, specificHandlingRenameResults);
     }
 
+    public ImageDataRenameResult renameSingleResultImage(Path path) {
+        return imageDataRenamer.rename(path);
+    }
 
     private boolean isNotIgnorableFile(Path path) {
         return prefixesOfFilesToBeIgnored.stream().noneMatch(s -> path.getFileName().toString().toLowerCase().endsWith(s.toLowerCase()));

@@ -12,21 +12,31 @@ import com.drew.metadata.iptc.IptcReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author Arthur Arts
  */
 @Repository
+@Slf4j
+@RequiredArgsConstructor
 public class ExifReader {
+
+    @Value("${debug.reader.print.imagedata}")
+    private boolean printImageData;
 
     public Metadata readData(File file) {
         Metadata metadata = null;
         try {
             metadata = ImageMetadataReader.readMetadata(file);
-            printValues(metadata);
+            if (printImageData) {
+                printValues(metadata);
+            }
         } catch (ImageProcessingException | IOException e) {
-            throw new RuntimeException(e);
+            log.error("couldn't read file {}", file.getName(), e);
         }
 
         return metadata;

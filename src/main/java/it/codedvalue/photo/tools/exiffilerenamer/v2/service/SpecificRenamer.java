@@ -1,6 +1,6 @@
 package it.codedvalue.photo.tools.exiffilerenamer.v2.service;
 
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultSpecific;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.SpecificHandlingRenameResult;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,8 +23,8 @@ public class SpecificRenamer {
     @Value("${prefixes.tobecut}")
     private List<String> prefixesToBeCut = Arrays.asList("VID_", "VID-", "IMG_", "IMG-");
 
-    public RenameSingleResultSpecific renameSpecific(Path path) {
-        RenameSingleResultSpecific renameSingleResultSpecific = new RenameSingleResultSpecific();
+    public SpecificHandlingRenameResult rename(Path path) {
+        SpecificHandlingRenameResult specificHandlingRenameResult = new SpecificHandlingRenameResult();
         String fileName = path.getFileName().toString();
 
         log.debug("try to rename file {}", path.getFileName());
@@ -33,16 +33,16 @@ public class SpecificRenamer {
                 String newName = fileName.replace(prefix, "");
                 try {
                     Files.move(path, path.resolveSibling(newName));
-                    renameSingleResultSpecific.setLogSpecificSuccess(String.format("renamed %s to %s", fileName, newName));
+                    specificHandlingRenameResult.setLogSpecificSuccess(String.format("renamed %s to %s", fileName, newName));
                     log.info("renamed {} to {}", fileName, newName);
-                    renameSingleResultSpecific.setOldVSNewVidName(Collections.singletonMap(path.getFileName().toString(), newName));
+                    specificHandlingRenameResult.setOldVSNewVidName(Collections.singletonMap(path.getFileName().toString(), newName));
                 } catch (IOException e) {
-                    renameSingleResultSpecific.setLogSpecificFail(String.format("could not rename %s \n %s", fileName, e));
+                    specificHandlingRenameResult.setLogSpecificFail(String.format("could not rename %s \n %s", fileName, e));
                 }
             }
         });
 
-        return renameSingleResultSpecific;
+        return specificHandlingRenameResult;
     }
 
 
