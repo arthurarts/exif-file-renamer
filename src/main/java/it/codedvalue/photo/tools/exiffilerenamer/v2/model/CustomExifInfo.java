@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author Arthur Arts
@@ -14,6 +15,11 @@ import lombok.Setter;
 
 @RequiredArgsConstructor
 public class CustomExifInfo {
+
+    // TODO implement define custom format.
+    @Value("${image.date.prefix.format}")
+    private String dateFormat;
+
     private SimpleDateFormat sm = new SimpleDateFormat("yyyyMMdd");
     @Setter
     private final Metadata metadata;

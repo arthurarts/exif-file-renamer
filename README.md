@@ -16,3 +16,8 @@ Notable exception: m2ts and mts files.
  -  3b to rename all files in directory and underlying directories:
     http://localhost:8080/rename-single?fileName=/Users/Foo/
    
+
+## To be implemented:
+- custom date format
+- write conversions to logfile
+- run only on specific filetypes
