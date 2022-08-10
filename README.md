@@ -1,6 +1,8 @@
 # exif-file-renamer
 
 
+WARNING: use at own risk. Test first with a test directory before letting it loose on complete directory structure.
+
 renames images and video files to prefix it with yyyyDDmm_ pattern so the alphabetic order is identical to the chronological order.
 
 
