@@ -1,8 +1,6 @@
 package it.codedvalue.photo.tools.exiffilerenamer.v2.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultImage;
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameSingleResultSpecific;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
