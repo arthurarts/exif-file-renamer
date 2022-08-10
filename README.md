@@ -7,8 +7,8 @@ renames images and video files to prefix it with yyyyDDmm_ pattern so the alphab
 1. start up application
 2. open browser
 
-3a. to rename single image: 
+ - 3a to rename single image: 
     http://localhost:8080/rename-single?fileName=/Users/Foo/1.JPG
- b  to rename all files in directory and underlying directories:
+ -  3b to rename all files in directory and underlying directories:
     http://localhost:8080/rename-single?fileName=/Users/Foo/
    
