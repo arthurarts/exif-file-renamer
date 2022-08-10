@@ -3,7 +3,9 @@
 
 WARNING: use at own risk. Test first with a test directory before letting it loose on complete directory structure.
 
-renames images and video files to prefix it with yyyyDDmm_ pattern so the alphabetic order is identical to the chronological order.
+Renames images and video files to prefix it with yyyyDDmm_ pattern so the alphabetic order is identical to the chronological order.
+Works on most video and image types, including raw files.
+Notable exception: m2ts and mts files.
 
 
 1. start up application
