@@ -25,12 +25,12 @@ public class ExifController {
     private String safeImageDirectory;
     private final FileRenameService fileRenameService;
 
-    @GetMapping("rename-single-file")
+    @GetMapping("rename-single")
     public ImageDataRenameResult renameSingleFile(@RequestParam String fileName) {
         return fileRenameService.renameSingleResultImage(Paths.get(fileName).normalize());
     }
 
-    @GetMapping("rename-all-in-directory")
+    @GetMapping("rename-all")
     public RenameTotalResult renameAllFilesInDirectory(@RequestParam String directory) {
 
         RenameTotalResult renameTotalResult = null;
