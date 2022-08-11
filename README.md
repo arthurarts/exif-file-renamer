@@ -20,3 +20,4 @@ Notable exception: m2ts and mts files.
 - custom date format
 - write conversions to logfile
 - run only on specific filetypes
+- gui to perform renaming on select files
