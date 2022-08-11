@@ -13,7 +13,7 @@ Notable exception: m2ts and mts files.
  - a to rename single image: 
     http://localhost:8080/rename-single?fileName=/Users/Foo/1.JPG
  - b to rename all files in directory and underlying directories:
-    http://localhost:8080/rename-all?fileName=/Users/Foo/
+    http://localhost:8080/rename-all?directory=/Users/Foo/
    
 
 ## To be implemented:
