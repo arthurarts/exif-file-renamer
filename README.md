@@ -18,6 +18,6 @@ Notable exception: m2ts and mts files.
 
 ## To be implemented:
 - custom date format
-- write conversions to logfile
+- write conversions to logfile/recovery file
 - run only on specific filetypes
 - gui to perform renaming on select files
