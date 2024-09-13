@@ -1,8 +1,8 @@
 package it.codedvalue.photo.tools.exiffilerenamer.v2.service;
 
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.ImageDataRenameResult;
-import it.codedvalue.photo.tools.exiffilerenamer.v2.model.SpecificHandlingRenameResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameTotalResult;
+import it.codedvalue.photo.tools.exiffilerenamer.v2.model.SpecificHandlingRenameResult;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,11 +39,16 @@ public class FileRenameService {
         List<SpecificHandlingRenameResult> specificHandlingRenameResults = new ArrayList<>();
 
         try (Stream<Path> paths = Files.walk(Paths.get(readDirectory))) {
-            paths.filter(this::isNotIgnorableFile)
+            paths.filter(this::notHidden)
+                    .filter(this::isNotIgnorableFile)
                     .filter(Files::isRegularFile)
                     .filter(path -> !Files.isDirectory(path))
-                    .filter(this::notHidden)
                     .forEach(path -> {
+                        try {
+                            Thread.sleep(25);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         ImageDataRenameResult renameSingleResultImage;
                         SpecificHandlingRenameResult specificHandlingRenameResult;
                         if (!isSpecificFileNameToBeRenamed(path.getFileName().toString())) {

@@ -49,7 +49,7 @@ public class ImageDataRenamer {
         String s = path.getFileName().toString();
         log.debug("Yearcheck for {} : year is {}?", s, s.substring(0, 4));
         try {
-            if ((Integer.valueOf(s.substring(0, 4)).compareTo(2002) >= 0) && (Integer.valueOf(s.substring(0, 4)).compareTo(2023) < 0)) {
+            if ((Integer.valueOf(s.substring(0, 4)).compareTo(2002) >= 0) && (Integer.valueOf(s.substring(0, 4)).compareTo(2050) < 0)) {
                 return true;
             }
         } catch (NumberFormatException nf) {

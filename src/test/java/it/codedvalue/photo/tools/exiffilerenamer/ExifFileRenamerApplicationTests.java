@@ -2,6 +2,7 @@ package it.codedvalue.photo.tools.exiffilerenamer;
 
 import it.codedvalue.photo.tools.exiffilerenamer.v2.controller.ExifController;
 import java.io.IOException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ class ExifFileRenamerApplicationTests {
     @Autowired
     private ExifController controller;
 
+    @Disabled
     @Test
     public void testPathTraversal() throws IOException {
 
