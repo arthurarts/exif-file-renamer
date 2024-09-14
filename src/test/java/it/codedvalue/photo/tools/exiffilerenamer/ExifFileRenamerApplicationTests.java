@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 
 @SpringBootTest
@@ -22,7 +24,7 @@ class ExifFileRenamerApplicationTests {
     @Test
     public void testPathTraversal() throws IOException {
 
-       controller.renameAllFilesInDirectory("/Users/Admin/Desktop/photo/2021-09-25/../..");
+       controller.renameAllFilesInDirectory("/Users/Admin/Desktop/photo/2021-09-25/../..", null);
 
 
     }

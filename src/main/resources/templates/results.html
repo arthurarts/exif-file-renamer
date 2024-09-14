@@ -1,0 +1,9 @@
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+
+<div class="container-fluid text-center flex-box block px-4">
+
+        <ul th:each="result: ${results.imageRenamingResults}" class="list-group">
+            <li class="list-group-item"><span th:text="${result.renameSuccessLog}"></span></li>
+        </ul>
+</div>
+</html>

@@ -1,19 +1,131 @@
-<html>
+<html lang="en" data-bs-theme="light">
 <head>
     <title>Exif Renamer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .card-img-small {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+
+        }
+    </style>
 </head>
 <body>
-<h1>Quick links</h1>
-<p>
-<ul>
-    <li><a href="/rename-all?directory=/Users/arthurarts/Desktop/photo/">Desktop photo</a></li>
-    <li><a href="/rename-all?directory=/Volumes/OM5-256GB/DCIM/">OM5 - PNY 256GB</a></li>
-    <li><a href="/rename-all?directory=/Volumes/CFE256GB/DCIM/">R5 - CFExpress Type B</a></li>
-    <li><a href="/rename-all?directory=/Volumes/256GBLexar/DCIM/">R5 - Lexar</a></li>
-    <li><a href="/rename-all?directory=/Volumes/Abbey250D/DCIM/">Abbey - 250D - Samsung 256GB</a></li>
-    <li><a href="/rename-all?directory=/Volumes/EOS_DIGITAL/DCIM/100CANON">Sandisk</a></li>
-    <li><a href="/rename-all?directory=/Volumes/LUMIX/DCIM">Kessia Gx880 MicroSD</a></li>
-</ul>
-</p>
+<h1>Exif Photo Renamer</h1>
+
+
+<div class="container-fluid text-center flex-box block px-4">
+    <div class="row align-items-start">
+
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/mbp.jpeg" class="card-img-top card-img-small mx-auto" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Desktop Photo</h5>
+                <p class="card-text">/Users/arthurarts/Desktop/photo/</p>
+                <a href="#" class="btn btn-primary"
+                   hx-get="rename-all?directory=/Users/arthurarts/Desktop/photo/"
+                   hx-target="#result-container"
+                   hx-swap="innerHTML">Desktop Photo</a>
+
+                <form id="directoryForm" hx-post="/rename-list" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML">
+                    <!-- Hidden file input -->
+                    <input type="file" id="directoryInput" webkitdirectory directory multiple style="display: none;" onchange="submitForm()">
+                    <!-- Visible button to trigger file input -->
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('directoryInput').click();">
+                        Kies Directory
+                    </button>
+                </form>
+                <ul id="fileList" class="mt-3"></ul>
+
+            </div>
+        </div>
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/r5.jpeg" class="card-img-top card-img-small mx-auto" alt="CFE 256GB">
+            <div class="card-body">
+                <h5 class="card-title">Canon EOS R5</h5>
+                <p class="card-text">/Volumes/CFE256GB/DCIM/</p>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/CFE256GB/DCIM/" class="btn btn-primary">CFE 256GB</a>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/256GBLexar/DCIM/" class="btn btn-primary">Lexar
+                    256GB</a>
+            </div>
+        </div>
+
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/om5.jpeg" class="card-img-top card-img-small mx-auto" alt="OM5 - PNY 256GB">
+            <div class="card-body">
+                <h5 class="card-title">OM System OM5</h5>
+                <p class="card-text">/Volumes/OM5-256GB/DCIM/</p>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/OM5-256GB/DCIM/" class="btn btn-primary">OM5 - PNY
+                    256GB</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="row align-items-start">
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/250D.jpeg" class="card-img-top card-img-small mx-auto" alt="Abbey - 250D - Samsung 256GB">
+            <div class="card-body">
+                <h5 class="card-title">Abbey's Samsung 256GB</h5>
+                <p class="card-text">/Volumes/Abbey250D/DCIM/</p>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/Abbey250D/DCIM/" class="btn btn-primary">Abbey - 250D
+                    - Samsung 256GB</a>
+            </div>
+        </div>
+
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/zv1.jpg" class="card-img-top card-img-small mx-auto" alt="Sandisk">
+            <div class="card-body">
+                <h5 class="card-title">Sony ZV1</h5>
+                <p class="card-text">/Volumes/EOS_DIGITAL/DCIM/100CANON</p>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/EOS_DIGITAL/DCIM/100CANON" class="btn btn-primary">Sandisk</a>
+            </div>
+        </div>
+
+        <div class="card col" style="width: 18rem;">
+            <img src="/img/gx880.jpeg" class="card-img-top card-img-small mx-auto" alt="Kessia Gx880 MicroSD">
+            <div class="card-body">
+                <h5 class="card-title">Kessia's Gx880 MicroSD</h5>
+                <p class="card-text">/Volumes/LUMIX/DCIM</p>
+                <a href="#" ht-get="/rename-all?directory=/Volumes/LUMIX/DCIM" class="btn btn-primary">Kessia Gx880
+                    MicroSD</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid text-center flex-box block borde" id="result-container">
+        Result
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@2.0.2"></script>
+<script>
+    function submitForm() {
+        // Create a FormData object from the form
+        const form = document.getElementById('directoryForm');
+        const formData = new FormData(form);
+
+        // Append the selected files
+        const files = document.getElementById('directoryInput').files;
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
+
+        // Send the form data using HTMX
+        htmx.ajax('POST', '/rename-list', {
+            target: '#result-container',
+            swap: 'innerHTML',
+            values: formData
+        });
+    }
+</script>
 </body>
+
+
 </html>
