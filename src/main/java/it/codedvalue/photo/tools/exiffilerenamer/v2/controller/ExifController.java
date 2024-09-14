@@ -4,7 +4,6 @@ import it.codedvalue.photo.tools.exiffilerenamer.v2.model.ImageDataRenameResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.model.RenameTotalResult;
 import it.codedvalue.photo.tools.exiffilerenamer.v2.service.FileRenameService;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Arthur Arts
@@ -34,16 +34,9 @@ public class ExifController {
         return "index";
     }
 
-    @GetMapping("rename-single")
+    @GetMapping("/rename-single")
     public ImageDataRenameResult renameSingleFile(@RequestParam String fileName) {
         return fileRenameService.renameSingleResultImage(Paths.get(fileName).normalize());
-    }
-
-    @PostMapping("rename-list")
-    public String renameSingleFile(@RequestParam("files") MultipartFile[] files) {
-        Arrays.stream(files).forEach(multipartFile -> log.info(multipartFile.getOriginalFilename()));
-        return "results";
-
     }
 
     @GetMapping("rename-all")
@@ -64,6 +57,4 @@ public class ExifController {
         model.addAttribute("results", renameTotalResult);
         return "results";
     }
-
-
 }
