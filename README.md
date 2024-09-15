@@ -11,9 +11,9 @@ Notable exception: m2ts and mts files.
 2. start up application
 3. open browser
  - a to rename single image: 
-    http://localhost:8080/rename-single?fileName=/Users/Foo/1.JPG
+    http://localhost:8181/rename-single?fileName=/Users/Foo/1.JPG
  - b to rename all files in directory and underlying directories:
-    http://localhost:8080/rename-all?directory=/Users/Foo/
+    http://localhost:8181/rename-all?directory=/Users/Foo/
    
 
 ## To be implemented:
