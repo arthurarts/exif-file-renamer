@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             <h2>Renaming Results</h2>
-            Renamed <span th:text="${results.getTotalRenamed()}"></span> files in total.
+            Renamed <span th:if="${results != null}" th:text="${results.totalRenamed}"></span> files in total.
         </div>
     </div>
     <div class="row">
@@ -16,21 +16,21 @@
 <!--        </div>-->
         <div class="col">
             <h3>Total Old vs New</h3>
-            <ul th:each="resultMap: ${results.totalOldvsNew}" class="list-group">
+            <ul th:if="${results != null}" th:each="resultMap: ${results.totalOldvsNew}" class="list-group">
                 <li class="list-group-item" th:each="result : ${resultMap}">
-                    Renamed <span th:text="${result.value}"></span> to <span th:text="${result.key}"></span>
+                    Renamed <span th:text="${result.key}"> to <span th:text="${result.value}"></span></span>
                 </li>
             </ul>
         </div>
         <div class="col">
             <h3>Image Renaming Results Fail Log</h3>
-            <ul th:each="result: ${results.imageRenamingResults}" class="list-group">
+            <ul th:if="${results != null}" th:each="result: ${results.imageRenamingResults}" class="list-group">
                 <li class="list-group-item"><span th:text="${result.renameFailLog}"></span></li>
             </ul>
         </div>
     </div>
 
-    <div class="row" th:if="${!results.specificRenamingResults.isEmpty()}">
+    <div class="row" th:if="${results != null and !results.specificRenamingResults.isEmpty()}">
         <div class="col-4" >
             <h3>Specific Handling Rename Result Log</h3>
             <ul th:each="result: ${results.specificRenamingResults}" class="list-group">
@@ -39,13 +39,13 @@
         </div>
         <div class="col-4">
             <h3>Specific Handling Rename Result Log</h3>
-            <ul th:each="result: ${results.specificRenamingResults}" class="list-group">
+            <ul th:if="${results != null}" th:each="result: ${results.specificRenamingResults}" class="list-group">
                 <li class="list-group-item"><span th:text="${result.logSpecificSuccess}"></span></li>
             </ul>
         </div>
         <div class="col-4">
             <h3>Specific Handling Rename Result Log</h3>
-            <ul th:each="result: ${results.specificRenamingResults}" class="list-group">
+            <ul  th:if="${results != null}" th:each="result: ${results.specificRenamingResults}" class="list-group">
                 <li class="list-group-item"><span th:text="${result.oldVSNewVidName}"></span></li>
             </ul>
         </div>
