@@ -45,7 +45,7 @@ public class FileRenameService {
                     .filter(path -> !Files.isDirectory(path))
                     .forEach(path -> {
                         try {
-                            Thread.sleep(25);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

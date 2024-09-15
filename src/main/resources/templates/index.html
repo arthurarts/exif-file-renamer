@@ -1,26 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Exif Renamer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arthur's Exif Renamer</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- HTMX (Single Inclusion) -->
-    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
-
-    <style>
-        .card-img-small {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-    </style>
+    <link href="/css/user.css" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid text-center px-4">
-    <h1 class="mt-4">Exif Photo Renamer</h1>
+<div class="container text-center px-4">
+    <h1 class="mt-4">Arthur's Exif Photo Renamer</h1>
 
     <div class="row align-items-start mt-4">
         <!-- First Card with Directory Picker -->
@@ -29,16 +21,13 @@
             <div class="card-body">
                 <h5 class="card-title">Desktop Photo</h5>
                 <p class="card-text">/Users/arthurarts/Desktop/photo/</p>
-
-                <!-- Rename All Button -->
                 <a href="#" class="btn btn-primary mb-2"
-                   hx-get="/rename-all?directory=/Users/arthurarts/Desktop/photo/"
+                   hx-get="/rename-all?directory=/Users/arthurarts/Desktop/photo/te delen"
                    hx-target="#result-container"
-                   hx-swap="innerHTML">Rename Desktop Photos</a>
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename Desktop Photos</a>
             </div>
         </div>
-
-        <!-- Other Cards -->
         <div class="card col" style="width: 18rem;">
             <img src="/img/r5.jpeg" class="card-img-top card-img-small mx-auto" alt="Canon EOS R5">
             <div class="card-body">
@@ -46,12 +35,14 @@
                 <p class="card-text">/Volumes/CFE256GB/DCIM/</p>
                 <a href="#" class="btn btn-primary mb-2"
                    hx-get="/rename-all?directory=/Volumes/CFE256GB/DCIM/"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename CFE 256GB</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename CFE 256GB</a>
                 <a href="#" class="btn btn-primary"
                    hx-get="/rename-all?directory=/Volumes/256GBLexar/DCIM/"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename Lexar 256GB</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename Lexar 256GB</a>
             </div>
         </div>
 
@@ -62,8 +53,9 @@
                 <p class="card-text">/Volumes/OM5-256GB/DCIM/</p>
                 <a href="#" class="btn btn-primary mb-2"
                    hx-get="/rename-all?directory=/Volumes/OM5-256GB/DCIM/"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename OM5 - PNY 256GB</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename OM5 - PNY 256GB</a>
             </div>
         </div>
     </div>
@@ -76,11 +68,11 @@
                 <p class="card-text">/Volumes/Abbey250D/DCIM/</p>
                 <a href="#" class="btn btn-primary mb-2"
                    hx-get="/rename-all?directory=/Volumes/Abbey250D/DCIM/"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename Abbey - 250D - Samsung 256GB</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename Abbey - 250D - Samsung 256GB</a>
             </div>
         </div>
-
         <div class="card col" style="width: 18rem;">
             <img src="/img/zv1.jpg" class="card-img-top card-img-small mx-auto" alt="Sandisk">
             <div class="card-body">
@@ -88,11 +80,11 @@
                 <p class="card-text">/Volumes/EOS_DIGITAL/DCIM/100CANON</p>
                 <a href="#" class="btn btn-primary mb-2"
                    hx-get="/rename-all?directory=/Volumes/EOS_DIGITAL/DCIM/100CANON"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename Sandisk</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename Sandisk</a>
             </div>
         </div>
-
         <div class="card col" style="width: 18rem;">
             <img src="/img/gx880.jpeg" class="card-img-top card-img-small mx-auto" alt="Kessia Gx880 MicroSD">
             <div class="card-body">
@@ -100,19 +92,21 @@
                 <p class="card-text">/Volumes/LUMIX/DCIM</p>
                 <a href="#" class="btn btn-primary mb-2"
                    hx-get="/rename-all?directory=/Volumes/LUMIX/DCIM"
-                   hx-target="#result-container"
-                   hx-swap="innerHTML">Rename Kessia Gx880 MicroSD</a>
+                  hx-target="#result-container"
+                   hx-indicator="#spinner"
+                   hx-swap="innerHTML swap:1s">Rename Kessia Gx880 MicroSD</a>
             </div>
         </div>
     </div>
 
     <!-- Result Container -->
-    <div class="container-fluid text-center mt-4" id="result-container">
-        <div class="alert alert-info">Result will appear here.</div>
+    <div class="container text-center mt-4" id="result-container">
+        <svg class="htmx-indicator" id="spinner" xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 24 24"><rect width="7.33" height="7.33" x="1" y="1" fill="#4248f5"><animate id="svgSpinnersBlocksWave0" attributeName="x" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="0;svgSpinnersBlocksWave1.end+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="1" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="1" y="8.33" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="1" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="8.33" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="1" y="15.66" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="8.33" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="15.66" fill="#4248f5"><animate attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="15.66" fill="#4248f5"><animate id="svgSpinnersBlocksWave1" attributeName="x" begin="svgSpinnersBlocksWave0.begin+0.4s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="svgSpinnersBlocksWave0.begin+0.4s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="svgSpinnersBlocksWave0.begin+0.4s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="svgSpinnersBlocksWave0.begin+0.4s" dur="0.6s" values="7.33;1.33;7.33"/></rect></svg>
+        <div class="alert alert-info htmx-indicator title">Result will appear here.</div>
     </div>
 </div>
 
-<!-- Bootstrap JS Bundle -->
+<script src="https://unpkg.com/htmx.org@2.0.2"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

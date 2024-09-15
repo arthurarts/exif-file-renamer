@@ -24,7 +24,6 @@ public class RenameTotalResult {
         this.specificRenamingResults = specificHandlingRenameResults;
     }
 
-    private Integer totalRenamed;
     private List<Map<String, String>> totalOldvsNew;
     private List<ImageDataRenameResult> imageRenamingResults;
     private List<SpecificHandlingRenameResult> specificRenamingResults;
